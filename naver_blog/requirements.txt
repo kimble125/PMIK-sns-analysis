@@ -1,0 +1,30 @@
+# Python 3.11+ recommended (3.14 has compatibility issues)
+# python_requires = ">=3.11,<3.14"
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Web scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+selenium>=4.15.0
+
+# Data processing
+pandas>=2.1.0
+Pillow>=10.0.0
+
+# OCR
+easyocr>=1.7.0
+
+# Video transcripts
+youtube-transcript-api>=0.6.0
+
+# Utilities
+tqdm>=4.66.0
+
+# Whisper (for videos without subtitles) - ACTIVATED
+openai-whisper>=20230918
+yt-dlp>=2023.10.0
+
+# Note: FFmpeg is also required for Whisper
+# Install: See WHISPER_SETUP.md for instructions
