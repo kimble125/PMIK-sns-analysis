@@ -180,7 +180,7 @@ git config --global user.email "your.email@example.com"
 cd ~/Desktop
 
 # GitHub에서 클론
-git clone https://github.com/YOUR_USERNAME/pm-korea-sns-analysis.git
+git clone https://github.com/YOUR_USERNAME/PMIK-sns-analysis.git
 
 # 프로젝트 폴더로 이동
 cd pm-korea-sns-analysis/naver_blog
