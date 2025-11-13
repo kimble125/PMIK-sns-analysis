@@ -1,0 +1,14 @@
+# YouTube Data Collection Configuration
+# 이 파일을 config.py로 복사한 후 API 키를 입력하세요
+# 주의: config.py는 .gitignore에 추가되어야 합니다!
+
+# YouTube Data API v3 키 (필수)
+# 발급: https://console.cloud.google.com/
+YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY_HERE"
+
+# Google Vision API 키 (선택, 썸네일 OCR용)
+GOOGLE_VISION_API_KEY = "YOUR_VISION_API_KEY_HERE"
+
+# 기타 설정
+MAX_RESULTS_PER_KEYWORD = 50  # 키워드당 최대 검색 결과
+TOTAL_TARGET = 1000  # 목표 수집 개수

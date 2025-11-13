@@ -1,0 +1,36 @@
+컬럼명,데이터타입,설명,예시,Phase,카카오스토리_대응,네이버블로그_대응
+platform,str,플랫폼 식별,youtube,1,,platform
+video_id,str,YouTube 영상 고유 ID,dQw4w9WgXcQ,1,shortcode,post_id
+url,str,영상 전체 URL,https://youtube.com/watch?v=dQw4w9WgXcQ,1,,url
+channel_id,str,채널 고유 ID,UCuAXFkgsw1L7xaCfnd5JJOw,1,user_id,blog_id
+channel_name,str,채널 이름,피엠리아,1,name,
+channel_subscriber_count,int,구독자 수,15000,1,,
+channel_video_count,int,채널 총 영상 수,250,1,,
+channel_view_count,int,채널 총 조회수,500000,1,,
+title,str,영상 제목,피엠인터내셔널 피트라인 후기,1,,title
+description,str,영상 설명 (본문),파트너ID: 12345678...,1,content,content
+published_datetime,str,게시 일시,2025-11-01T10:30:00Z,1,date,published_datetime
+duration,str,영상 길이 (ISO),PT4M13S,1,,
+duration_seconds,int,영상 길이 (초),253,1,,
+view_count,int,조회수,1500,1,,
+like_count,int,좋아요 수,120,1,like_count,like_count
+comment_count,int,댓글 수,35,1,comment_count,comment_count
+favorite_count,int,즐겨찾기 (보통 0),0,1,,
+category_id,str,YouTube 카테고리,22,1,,
+tags,str,태그 (쉼표 구분),"피엠,독일피엠,건강",1,hashtag,
+hashtags,str,해시태그 (#포함),"#피엠인터내셔널,#피트라인",1,hashtag,hashtags
+sponsor_phone,str,추천인 전화번호,010-1234-5678,1,,sponsor_phone
+sponsor_partner_id,str,추천인 파트너 ID,12345678,1,,sponsor_partner_id
+thumbnail_url,str,썸네일 URL (고화질),https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg,1,media_url,
+has_captions,bool,자막 존재 여부,True,1,,
+caption_language,str,자막 언어,ko,1,,
+collected_date,str,수집 날짜,2025-11-11,1,,collected_date
+youtube_transcript,str,YouTube 공식 자막,안녕하세요 오늘은...,2,,youtube_transcript
+whisper_transcript,str,Whisper 음성 인식,안녕하세요 오늘은...,2,,whisper_transcript
+transcript_language,str,자막 언어 코드,ko,2,,
+thumbnail_ocr_text,str,썸네일 OCR 텍스트,피트라인 7주년 프로모션,3,,image_ocr_text
+thumbnail_ocr_confidence,float,OCR 신뢰도,0.95,3,,
+top_comments,str,상위 댓글 (| 구분),좋은 정보 감사합니다 | 문의 드립니다,4,,
+comment_sentiment,str,댓글 감성 분석,긍정,4,,
+is_pm_related,bool,PM 관련 여부,True,1,,
+filter_score,float,관련도 점수,0.87,1,,
