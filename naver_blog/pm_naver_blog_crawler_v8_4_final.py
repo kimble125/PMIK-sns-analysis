@@ -826,6 +826,11 @@ def setup_driver() -> webdriver.Chrome:
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     chrome_options.add_experimental_option('useAutomationExtension', False)
     
+    # VM 환경 추가 설정 (DevToolsActivePort 오류 해결)
+    chrome_options.add_argument('--remote-debugging-port=9222')
+    chrome_options.add_argument('--disable-setuid-sandbox')
+    chrome_options.add_argument('--single-process')  # 멀티프로세스 환경에서 안정성 향상
+    
     # 메모리 최적화
     chrome_options.add_argument('--disable-extensions')
     chrome_options.add_argument('--disable-plugins')
