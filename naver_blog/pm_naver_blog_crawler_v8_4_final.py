@@ -841,8 +841,14 @@ def setup_driver() -> webdriver.Chrome:
     user_agent = random.choice(USER_AGENTS)
     chrome_options.add_argument(f'user-agent={user_agent}')
     
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    # Selenium 4.6+ 자동 드라이버 관리 사용 (ChromeDriver 버전 자동 매칭)
+    try:
+        driver = webdriver.Chrome(options=chrome_options)
+    except Exception as e:
+        logger.warning(f"자동 드라이버 실패, webdriver-manager 사용: {e}")
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+    
     driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
     
     # 자동화 감지 우회
