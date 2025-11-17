@@ -1,0 +1,222 @@
+# PM-International Korea 네이버 블로그 크롤러 설정 파일
+# 버전: 9.1.0
+# 최종 수정일: 2025-11-17
+
+# ===========================
+# 크롤러 메타 정보
+# ===========================
+metadata:
+  version: "9.1.0"
+  name: "PM-International Korea 네이버 블로그 크롤러"
+  author: "PMI Korea 데이터 분석팀"
+  last_updated: "2025-11-17"
+
+# ===========================
+# 테스트 모드 설정
+# ===========================
+test_mode:
+  enabled: false  # 테스트 모드 비활성화 (전체 실행)
+  max_duration_minutes: 20  # 테스트 시에만 사용
+  max_posts: null  # 무제한
+
+# ===========================
+# 크롤링 목표 설정
+# ===========================
+targets:
+  total_target: 15000  # 전체 목표 (테스트 모드에서는 무시)
+  max_search_results: 1000  # 키워드당 최대 검색 결과
+
+# ===========================
+# 체크포인트 설정
+# ===========================
+checkpoint:
+  enabled: true
+  interval_seconds: 3600  # 1시간마다 저장
+  save_directory: "checkpoints"
+
+# ===========================
+# 에러 복구 설정
+# ===========================
+error_recovery:
+  max_retries: 3
+  retry_delays: [5, 10, 30]  # 초 단위
+  max_consecutive_errors: 50
+  failed_urls_file: "failed_urls.json"
+
+# ===========================
+# 크롤링 속도 설정
+# ===========================
+crawling:
+  page_load_timeout: 10  # 초
+  request_delay_min: 1.5  # 초
+  request_delay_max: 2.5  # 초
+  adaptive_delay:
+    initial_min: 2.0
+    initial_max: 4.0
+
+# ===========================
+# 검색 키워드 설정
+# ===========================
+keywords:
+  primary:
+    - keyword: "피엠인터내셔널"
+      target: 1000
+    - keyword: "독일피엠"
+      target: 1000
+    - keyword: "PM인터내셔널"
+      target: 1000
+    - keyword: "피엠코리아"
+      target: 1000
+  
+  secondary:
+    - keyword: "피트라인"
+      target: 1000
+    - keyword: "탑쉐이프"
+      target: 1000
+    - keyword: "프로쉐이프"
+      target: 1000
+    - keyword: "디드링크"
+      target: 1000
+    - keyword: "뮤노겐"
+      target: 1000
+    - keyword: "엑티바이즈"
+      target: 1000
+    - keyword: "파워칵테일"
+      target: 1000
+
+# ===========================
+# 필터링 키워드
+# ===========================
+filters:
+  pm_brand_keywords:
+    - "피엠"
+    - "피엠인터내셔널"
+    - "PM International"
+    - "PMInternational"
+    - "PM"
+    - "FitLine"
+    - "핏라인"
+    - "피트라인"
+  
+  pm_sales_keywords:
+    - "추천인"
+    - "추천인코드"
+    - "추천인 코드"
+    - "추천인번호"
+    - "추천인 번호"
+    - "파트너"
+    - "파트너코드"
+    - "파트너 코드"
+    - "파트너번호"
+    - "파트너 번호"
+    - "등록"
+    - "가입"
+    - "문의"
+  
+  exclude_keywords:
+    # 언론/뉴스
+    - "뉴스"
+    - "기사"
+    - "보도"
+    - "공지"
+    - "아카데미"
+    - "세미나"
+    - "기자"
+    - "취재"
+    # 피엠코리아 매트리스 업체
+    - "매트리스"
+    - "침대"
+    - "혼수가구"
+    - "신혼가구"
+    - "팽창탱크"
+    - "배관"
+    # 채용/기업 정보
+    - "채용"
+    - "구인"
+    - "구직"
+    - "입사"
+    - "면접"
+    - "이력서"
+    - "salary"
+    - "job"
+    - "recruit"
+    - "근무환경"
+    - "사원"
+    - "직원"
+    # 기타 노이즈
+    - "주가"
+    - "주식"
+    - "상장"
+    - "IR"
+    - "공시"
+  
+  excluded_blog_ids:
+    # 마케팅/뉴스 블로그
+    - "ysc14"
+    - "marketingtoday"
+    - "biznstory"
+    # 피엠코리아 매트리스 업체
+    - "embarkonsleep"
+    - "pmkorea_bed"
+    # 채용공고/HR 블로그
+    - "jjobs"
+    - "saraminhr"
+    - "incruit"
+    - "jobkorea"
+    - "wanted"
+    - "rocketpunch"
+    - "saramin"
+    - "peoplenjob"
+    # 기업정보/주식 블로그
+    - "plus_company"
+    - "comp_info"
+    - "stock_info"
+    - "invest_guru"
+  
+  media_title_patterns:
+    - '"[^"]+",\s*"'  # "OOO 회장", "..." 같은 인용문
+    - '기자\s+'
+    - '취재\s+'
+
+# ===========================
+# User-Agent 목록
+# ===========================
+user_agents:
+  - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"
+
+# ===========================
+# 출력 설정
+# ===========================
+output:
+  filename_prefix: "naver_blog_pm"
+  encoding: "utf-8-sig"
+  columns:
+    - "platform"
+    - "post_id"
+    - "blog_id"
+    - "url"
+    - "title"
+    - "content"
+    - "published_datetime"
+    - "sponsor_phone"
+    - "sponsor_partner_id"
+    - "like_count"
+    - "comment_count"
+    - "hashtags"
+    - "image_urls"
+    - "video_urls"
+    - "collected_date"
+
+# ===========================
+# 로깅 설정
+# ===========================
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s [%(levelname)s] %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  file_logging:
+    enabled: true
+    directory: "logs"
+    filename_prefix: "crawler"
