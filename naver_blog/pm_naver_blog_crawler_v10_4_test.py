@@ -206,7 +206,6 @@ class OCRProcessor:
                 self.ocr_engine = PaddleOCR(
                     use_angle_cls=True, 
                     lang='korean',
-                    show_log=False,
                     use_gpu=True  # GPU 가용 시 자동 사용
                 )
                 logger.info("✅ PaddleOCR 초기화 완료")
@@ -217,7 +216,6 @@ class OCRProcessor:
                     self.ocr_engine = PaddleOCR(
                         use_angle_cls=True, 
                         lang='korean',
-                        show_log=False,
                         use_gpu=False
                     )
                     logger.info("✅ PaddleOCR 초기화 완료 (CPU 모드)")
