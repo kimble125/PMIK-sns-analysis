@@ -15,8 +15,13 @@ pandas>=2.1.0
 numpy>=1.24.0
 Pillow>=10.0.0
 
-# OCR
-easyocr>=1.7.0
+# OCR (v10.4: PaddleOCR로 변경)
+# easyocr>=1.7.0  # 기존 - 한국어 인식률 낮음
+paddlepaddle>=2.5.0
+paddleocr>=2.7.0
+
+# Timezone
+pytz>=2023.3
 
 # YouTube API
 google-api-python-client>=2.108.0

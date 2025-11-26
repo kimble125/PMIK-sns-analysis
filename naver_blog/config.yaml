@@ -1,30 +1,30 @@
 # PM-International Korea 네이버 블로그 크롤러 설정 파일
-# 버전: 9.1.0
-# 최종 수정일: 2025-11-17
+# 버전: 10.2.0
+# 최종 수정일: 2025-11-20
 
 # ===========================
 # 크롤러 메타 정보
 # ===========================
 metadata:
-  version: "9.1.0"
+  version: "10.2.0"
   name: "PM-International Korea 네이버 블로그 크롤러"
   author: "PMI Korea 데이터 분석팀"
-  last_updated: "2025-11-17"
+  last_updated: "2025-11-20"
 
 # ===========================
 # 테스트 모드 설정
 # ===========================
 test_mode:
-  enabled: false  # 테스트 모드 비활성화 (전체 실행)
-  max_duration_minutes: 20  # 테스트 시에만 사용
-  max_posts: null  # 무제한
+  enabled: true  # v10.3.1 테스트 모드 활성화
+  max_duration_minutes: 40  # v10.3.1: 40분 테스트 (작업 중인 게시물까지만 완료 후 종료)
+  max_posts: null  # 무제한 (시간으로만 제한)
 
 # ===========================
 # 크롤링 목표 설정
 # ===========================
 targets:
   total_target: 15000  # 전체 목표 (테스트 모드에서는 무시)
-  max_search_results: 1000  # 키워드당 최대 검색 결과
+  max_search_results: 100  # v10.3: 키워드당 최대 검색 결과 (100개로 제한)
 
 # ===========================
 # 체크포인트 설정
@@ -83,20 +83,29 @@ keywords:
       target: 1000
     - keyword: "파워칵테일"
       target: 1000
+  
+  # v10.2: 제품 키워드 테스트
+  product_test:
+    - keyword: "레스토레이트"
+      target: 1000
 
 # ===========================
 # 필터링 키워드
 # ===========================
 filters:
   pm_brand_keywords:
-    - "피엠"
+    # v10.1: 너무 광범위한 "피엠", "PM" 제거
     - "피엠인터내셔널"
     - "PM International"
     - "PMInternational"
-    - "PM"
+    - "PMIK"
+    - "독일PM"
+    - "독일피엠"
     - "FitLine"
     - "핏라인"
     - "피트라인"
+    - "PM인터내셔널"
+    - "피엠코리아"
   
   pm_sales_keywords:
     - "추천인"
@@ -124,18 +133,13 @@ filters:
     - "기자"
     - "취재"
     # 피엠코리아 매트리스 업체
-    - "매트리스"
-    - "침대"
+    # v10.4: 복합 키워드는 + 기호로 연결 (AND 로직, 모두 포함 시 배제)
+    - "피엠코리아+침대"      # "피엠코리아"와 "침대"가 모두 있을 때만 배제
+    - "피엠코리아+매트리스"  # "피엠코리아"와 "매트리스"가 모두 있을 때만 배제
     - "혼수가구"
     - "신혼가구"
     - "팽창탱크"
     - "배관"
-    # 채용/기업 정보
-    - "채용"
-    - "구인"
-    - "구직"
-    - "입사"
-    - "면접"
     - "이력서"
     - "salary"
     - "job"
@@ -155,6 +159,8 @@ filters:
     - "ysc14"
     - "marketingtoday"
     - "biznstory"
+    - "kimnkimmarketing"  # v10.1: 추가
+    - "dlxortjs"  # v10.4: 추가
     # 피엠코리아 매트리스 업체
     - "embarkonsleep"
     - "pmkorea_bed"
@@ -177,6 +183,80 @@ filters:
     - '"[^"]+",\s*"'  # "OOO 회장", "..." 같은 인용문
     - '기자\s+'
     - '취재\s+'
+  
+  # v10.1: 제품명 키워드 (띄어쓰기 무시 매칭)
+  product_keywords:
+    # 주요 라인
+    - "FitLine"
+    - "피트라인"
+    - "핏라인"
+    - "BeautyLine"
+    - "뷰티라인"
+    - "FitLine Skin"
+    - "피트라인 스킨"
+    - "핏라인 스킨"
+    # 핵심 제품
+    - "파워칵테일"
+    - "Power Cocktail"
+    - "액티바이즈"
+    - "Activize"
+    - "리스토레이트"
+    - "Restorate"
+    - "탑쉐이프"
+    - "탑셰이프"
+    - "TopShape"
+    - "디드링크"
+    - "D-Drink"
+    - "얼티메이트영"
+    - "Ultimate Young"
+    # 건강 보조
+    - "뮤노겐"
+    - "Munogen"
+    - "제너레이션 50+"
+    - "Generation 50+"
+    - "오메가 3+E"
+    - "Omega 3+E"
+    - "Q10플러스"
+    - "Q10 Plus"
+    - "큐텐플러스"
+    - "씨밸런스"
+    - "C Balance"
+    - "베이직스"
+    - "Basics"
+    - "베이젠플러스"
+    - "Basen Plus"
+    - "주니어파워칵테일"
+    - "Junior Power Cocktail"
+    # 다이어트/체형
+    - "프로쉐이프"
+    - "프로셰이프"
+    - "ProShape"
+    - "프로쉐이프 아미노"
+    - "프로셰이프 아미노"
+    - "ProShape Amino"
+    - "겔링핏"
+    - "Gel-ing Fit"
+    - "겔링핏젤"
+    - "Gel-ing Fit Gel"
+    # 뷰티
+    - "뷰티콜라겐"
+    - "Beauty Collagen"
+    - "클렌징폼"
+    - "Cleansing Foam"
+    - "필링마스크"
+    - "Peeling Mask"
+    - "밸런싱크림"
+    - "Balancing Cream"
+    - "액티바이즈세럼"
+    - "Activize Serum"
+    - "마스크팩"
+    - "Mask Pack"
+    - "브라이트닝포에버"
+    - "Brightening Forever"
+    - "브라이트닝크림"
+    - "Brightening Cream"
+    - "메드큐텐옥시리페어"
+    - "Med Cutem Oxy Repair Face Cream"
 
 # ===========================
 # User-Agent 목록

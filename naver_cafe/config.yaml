@@ -1,0 +1,111 @@
+# PM-International Korea 네이버 카페 크롤러 설정 v1.0
+# 작성자: PMI Korea 데이터 분석팀
+# 최종 수정일: 2024-11-18
+
+metadata:
+  version: "1.0.0"
+  author: "PMI Korea 데이터 분석팀"
+  last_updated: "2024-11-18"
+
+# 크롤링 대상 카페 설정
+# ⚠️ 실제 존재하는 카페 URL로 변경 필요
+target_cafes:
+  - name: "test_cafe"
+    cafe_id: "test_cafe"
+    cafe_url: "https://cafe.naver.com/joonggonara"  # 테스트용: 중고나라
+    description: "테스트용 카페"
+
+# 검색 키워드 설정
+keywords:
+  primary:
+    - keyword: "PM"
+      target: 30
+    - keyword: "PM인터내셔널"
+      target: 25  
+    - keyword: "피엠인터내셔널"
+      target: 25
+    - keyword: "FitLine"
+      target: 20
+    - keyword: "피트라인"
+      target: 20
+  secondary:
+    - keyword: "판매원"
+      target: 15
+    - keyword: "추천인"
+      target: 15
+    - keyword: "파트너"
+      target: 10
+    - keyword: "등록"
+      target: 10
+
+# 필터링 키워드
+filters:
+  pm_brand_keywords:
+    - "PM"
+    - "PM인터내셔널"
+    - "피엠인터내셔널" 
+    - "FitLine"
+    - "피트라인"
+    - "Restorate"
+    - "레스토레이트"
+    - "Basics"
+    - "베이직스"
+    - "PowerCocktail"
+    - "파워칵테일"
+    - "Activize"
+    - "액티바이즈"
+    
+  pm_sales_keywords:
+    - "판매원"
+    - "추천인"
+    - "파트너"
+    - "등록"
+    - "가입"
+    - "비즈니스"
+    - "수입"
+    - "투잡"
+    - "부업"
+    
+  exclude_keywords:
+    - "광고"
+    - "스팸"
+    - "홍보글"
+    - "업체"
+
+# 크롤링 설정
+crawling:
+  page_load_timeout: 10
+  request_delay_min: 2.0
+  request_delay_max: 4.0
+  max_pages_per_keyword: 10
+  max_posts_per_page: 15
+
+# 에러 복구 설정
+error_recovery:
+  max_retries: 3
+  retry_delays: [5, 10, 30]
+  max_consecutive_errors: 5
+
+# 체크포인트 설정
+checkpoint:
+  save_directory: "checkpoints"
+  interval_seconds: 3600  # 1시간
+
+# 테스트 모드 설정
+test_mode:
+  enabled: true
+  max_duration_minutes: 10
+  max_posts: 30
+
+# User-Agent 목록
+user_agents:
+  - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+
+# 출력 설정
+output:
+  csv_encoding: "utf-8-sig"
+  include_comments: true
+  max_content_length: 5000
+  date_format: "%Y-%m-%d %H:%M:%S"
