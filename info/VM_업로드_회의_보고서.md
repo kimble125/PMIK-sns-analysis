@@ -157,12 +157,12 @@ pip install paddleocr faster-whisper
 - [x] `.gitignore` 업데이트 (데이터 파일 제외)
 - [x] Git 커밋 및 Push 완료
 - [x] Git Tag 백업: `legacy-backup-20251211`
+- [x] VM에서 `instagram_extract_voice.py` 가져와서 `6_instagram/`에 추가
 
 ### 5.2 후속 작업 (인계자)
-- [ ] VM에서 `git pull` 실행
-- [ ] 각 플랫폼별 `.env` 파일 설정
+- [ ] 각 플랫폼별 `.env` 파일 설정(필요하다면 API키 변경 등)
 - [ ] 크롤링 자동화 스케줄링 (crontab)
-- [ ] 데이터 포맷 통일 검토 (CSV vs JSON)
+- [ ] 데이터 포맷 통일 검토 (CSV vs JSON) 
 
 ### 5.3 데이터 포맷 관련 인계사항
 
@@ -171,14 +171,4 @@ pip install paddleocr faster-whisper
 - kakaostory, instagram, facebook: **JSON**
 
 **권장 방향**:
-1. 크롤링 저장: JSON (원본 데이터 보존)
-2. 분석용 변환: CSV (pandas 분석 시)
-
----
-
-## 6. 문의 사항
-
-VM 업로드 관련 추가 문의 사항이 있으시면 말씀해 주세요.
-
-- **Git 백업 Tag**: `git checkout legacy-backup-20251211` (정리 전 상태 복구 가능)
-- **GitHub URL**: https://github.com/kimble125/PMIK-sns-analysis
+분석용으로 CSV 포맷이 권장되나, 저장 효율성이 JSON이 높은지 알아볼 것. 
