@@ -1,0 +1,160 @@
+# =============================================================================
+# PM-International Korea Band 크롤러 v1.0 설정
+# 공개 밴드/페이지 전용 - 로그인 없이 접근 가능한 콘텐츠만 수집
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 실행 모드 설정
+# -----------------------------------------------------------------------------
+execution_mode:
+  test_mode: true                    # true: 테스트 모드 (5분), false: 전체 수집
+  max_duration_minutes: 5            # 테스트용 5분 설정
+  max_posts_per_band: 50             # 밴드당 최대 게시물 수
+  checkpoint_interval_minutes: 2     # 체크포인트 저장 간격
+
+# -----------------------------------------------------------------------------
+# 크롤링 설정
+# -----------------------------------------------------------------------------
+crawling:
+  page_load_timeout: 15              # 페이지 로드 타임아웃 (초)
+  request_delay_min: 2.0             # 최소 요청 딜레이 (초)
+  request_delay_max: 4.0             # 최대 요청 딜레이 (초)
+  scroll_wait_seconds: 2             # 스크롤 후 대기 시간
+  max_scroll_attempts: 10            # 최대 스크롤 시도 횟수
+  max_retries: 3                     # 실패 시 재시도 횟수
+  headless: true                     # 헤드리스 모드 (true 권장)
+  max_empty_results: 5               # 연속 빈 결과 허용 횟수
+
+# -----------------------------------------------------------------------------
+# 검색 키워드 (config_cafe.yaml과 동기화)
+# -----------------------------------------------------------------------------
+keywords:
+  primary:  # 브랜드 키워드 (11개)
+    - keyword: "피엠인터내셔널"
+      target: 30
+    - keyword: "독일피엠"
+      target: 30
+    - keyword: "PM인터내셔널"
+      target: 30
+    - keyword: "피엠코리아"
+      target: 30
+    - keyword: "독일PM"
+      target: 30
+    - keyword: "피엠주스"
+      target: 30
+    - keyword: "피엠쥬스"
+      target: 30
+    - keyword: "pm주스"
+      target: 30
+    - keyword: "pm쥬스"
+      target: 30
+    - keyword: "독일주스"
+      target: 30
+    - keyword: "독일쥬스"
+      target: 30
+  secondary:  # 제품 키워드 (10개)
+    - keyword: "피트라인"
+      target: 20
+    - keyword: "FitLine"
+      target: 20
+    - keyword: "리스토레이트"
+      target: 20
+    - keyword: "파워칵테일"
+      target: 20
+    - keyword: "액티바이즈"
+      target: 20
+    - keyword: "뮤노겐"
+      target: 20
+    - keyword: "겔링핏"
+      target: 20
+    - keyword: "젤슈츠"
+      target: 20
+    - keyword: "프로쉐이프"
+      target: 20
+    - keyword: "오토십"
+      target: 20
+
+# -----------------------------------------------------------------------------
+# 필터링 규칙 (PM 키워드 태깅용)
+# -----------------------------------------------------------------------------
+filters:
+  # PM 브랜드 키워드 (콘텐츠 필터링용)
+  pm_brand_keywords:
+    - "피엠인터내셔널"
+    - "PM인터내셔널"
+    - "pm인터내셔널"
+    - "독일피엠"
+    - "독일PM"
+    - "피엠코리아"
+    - "피엠주스"
+    - "피엠쥬스"
+    - "pm주스"
+    - "pm쥬스"
+    - "독일주스"
+    - "독일쥬스"
+    - "PM-International"
+    - "pm-international"
+    - "PMI"
+    - "피트라인"
+    - "FitLine"
+    - "fitline"
+  
+  # PM 제품 키워드
+  product_keywords:
+    - "엑티바이즈"
+    - "Activize"
+    - "뮤노겐"
+    - "munogen"
+    - "파워칵테일"
+    - "PowerCocktail"
+    - "리스토레이트"
+    - "레스토레이트"
+    - "Restorate"
+    - "프로쉐이프"
+    - "ProShape"
+    - "탑쉐이프"
+    - "디드링크"
+    - "D-Drink"
+    - "겔링핏"
+    - "젤슈츠"
+    - "오토십"
+  
+  # 판매원 관련 키워드
+  sales_keywords:
+    - "팀파트너"
+    - "후원인"
+    - "추천인"
+    - "사업설명회"
+    - "네트워크마케팅"
+    - "다단계"
+    - "사업자등록"
+    - "부업"
+    - "재택부업"
+
+# -----------------------------------------------------------------------------
+# User-Agent 목록 (로테이션용)
+# -----------------------------------------------------------------------------
+user_agents:
+  - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"
+  - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15"
+
+# -----------------------------------------------------------------------------
+# 출력 설정
+# -----------------------------------------------------------------------------
+output:
+  data_dir: "data_band"                      # 데이터 저장 디렉토리
+  info_filename: "band_info"                 # 밴드/페이지 정보 파일명 prefix
+  posts_filename: "band_posts"               # 게시물 파일명 prefix
+  csv_encoding: "utf-8-sig"                  # CSV 인코딩
+  date_format: "%Y-%m-%d %H:%M:%S"           # 날짜 포맷
+  max_content_length: 10000                  # 콘텐츠 최대 길이
+
+# -----------------------------------------------------------------------------
+# 로깅 설정
+# -----------------------------------------------------------------------------
+logging:
+  level: "INFO"                     # DEBUG, INFO, WARNING, ERROR
+  log_dir: "logs"                   # 로그 저장 디렉토리
+  console_output: true              # 콘솔 출력 여부

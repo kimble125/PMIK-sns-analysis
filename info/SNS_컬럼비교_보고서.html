@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS 플랫폼별 수집 데이터 비교</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: #f5f7fa;
+            padding: 30px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        /* 메인 비교 테이블 */
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .main-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .main-table th:first-child {
+            border-radius: 10px 0 0 0;
+            text-align: left;
+            padding-left: 20px;
+            width: 160px;
+        }
+        .main-table th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+        .main-table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .main-table td:first-child {
+            text-align: left;
+            padding-left: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        .main-table tr:hover {
+            background: #f8f9ff;
+        }
+        .main-table tr.section-header td {
+            background: #e8eaff;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 13px;
+        }
+        .main-table tr:last-child td:first-child {
+            border-radius: 0 0 0 10px;
+        }
+        .main-table tr:last-child td:last-child {
+            border-radius: 0 0 10px 0;
+        }
+        
+        /* 체크/미지원 표시 */
+        .yes {
+            background: #d4edda;
+            color: #155724;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .no {
+            background: #f8f9fa;
+            color: #aaa;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .partial {
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+        
+        /* 요약 박스 */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .summary-box .num {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        .summary-box .label {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* 플랫폼 로고 색상 */
+        .platform-naver { color: #03C75A; }
+        .platform-band { color: #6C5CE7; }
+        .platform-youtube { color: #FF0000; }
+        .platform-insta { color: #E1306C; }
+        .platform-fb { color: #1877F2; }
+        .platform-kakao { color: #FEE500; background: #333; padding: 2px 6px; border-radius: 3px; }
+        
+        /* 범례 */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 인사이트 섹션 */
+        .insight-section {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .insight-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        .insight-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .insight-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .insight-item .icon {
+            font-size: 1.3em;
+        }
+        .insight-item .text {
+            color: #444;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        
+        footer {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 SNS 플랫폼별 수집 데이터 비교</h1>
+        <p class="subtitle">PM-International Korea 크롤러 현황 | 2025년 12월</p>
+        
+        <!-- 요약 통계 -->
+        <div class="summary-grid">
+            <div class="summary-box">
+                <div class="num">7</div>
+                <div class="label">수집 플랫폼</div>
+            </div>
+            <div class="summary-box">
+                <div class="num">7</div>
+                <div class="label">공통 항목</div>
+            </div>
+            <div class="summary-box">
+                <div class="num">28</div>
+                <div class="label">최다 항목 (유튜브)</div>
+            </div>
+            <div class="summary-box">
+                <div class="num">4</div>
+                <div class="label">PM정보 수집 플랫폼</div>
+            </div>
+        </div>
+        
+        <!-- 범례 -->
+        <div class="legend">
+            <div class="legend-item">
+                <span class="yes">수집</span>
+                <span>해당 데이터 수집 중</span>
+            </div>
+            <div class="legend-item">
+                <span class="no">미수집</span>
+                <span>해당 데이터 없음</span>
+            </div>
+            <div class="legend-item">
+                <span class="partial">일부</span>
+                <span>일부만 수집</span>
+            </div>
+        </div>
+        
+        <!-- 메인 비교 테이블 -->
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th>수집 항목</th>
+                    <th>네이버<br>블로그</th>
+                    <th>네이버<br>카페</th>
+                    <th>밴드</th>
+                    <th>유튜브</th>
+                    <th>인스타<br>그램</th>
+                    <th>페이스북</th>
+                    <th>카카오<br>스토리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 기본 정보 -->
+                <tr class="section-header">
+                    <td colspan="8">📝 기본 정보</td>
+                </tr>
+                <tr>
+                    <td>본문 내용</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>작성일시</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                <tr>
+                    <td>게시물 주소(URL)</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                <tr>
+                    <td>해시태그</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                
+                <!-- 반응 지표 -->
+                <tr class="section-header">
+                    <td colspan="8">👍 반응 지표</td>
+                </tr>
+                <tr>
+                    <td>좋아요 수</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>댓글 수</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>조회수</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                <tr>
+                    <td>공유 수</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                
+                <!-- 미디어 -->
+                <tr class="section-header">
+                    <td colspan="8">🖼️ 미디어 정보</td>
+                </tr>
+                <tr>
+                    <td>이미지 주소</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>동영상 주소</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>미디어 종류 구분</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>이미지 글자 인식(OCR)</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                
+                <!-- PM 비즈니스 -->
+                <tr class="section-header">
+                    <td colspan="8">💼 PM 비즈니스 정보 (핵심)</td>
+                </tr>
+                <tr>
+                    <td>추천인 전화번호</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                <tr>
+                    <td>추천인 파트너번호</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                <tr>
+                    <td>PM키워드 포함 여부</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+                
+                <!-- 작성자 정보 -->
+                <tr class="section-header">
+                    <td colspan="8">👤 작성자 정보</td>
+                </tr>
+                <tr>
+                    <td>작성자 이름/닉네임</td>
+                    <td><span class="partial">별도</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>작성자 ID/핸들</td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                </tr>
+                <tr>
+                    <td>채널/커뮤니티 이름</td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="yes">수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                    <td><span class="no">미수집</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- 인사이트 -->
+        <div class="insight-section">
+            <h3>💡 핵심 인사이트</h3>
+            <div class="insight-list">
+                <div class="insight-item">
+                    <span class="icon">✅</span>
+                    <span class="text"><strong>모든 플랫폼 공통:</strong> 본문, 작성일시, 좋아요, 댓글, 해시태그, 미디어 주소 (7개)</span>
+                </div>
+                <div class="insight-item">
+                    <span class="icon">⚠️</span>
+                    <span class="text"><strong>개선 필요:</strong> 인스타/페이스북/카카오에 추천인 정보 추출 기능 추가 권장</span>
+                </div>
+                <div class="insight-item">
+                    <span class="icon">📊</span>
+                    <span class="text"><strong>유튜브 강점:</strong> OCR 9개 컬럼으로 이미지/영상 내 텍스트 자동 인식</span>
+                </div>
+                <div class="insight-item">
+                    <span class="icon">🎯</span>
+                    <span class="text"><strong>PM 정보 수집:</strong> 네이버 블로그, 네이버 카페, 밴드, 유튜브 (4개 플랫폼)</span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            PM-International Korea 데이터 분석팀 | 2025년 12월 3일
+        </footer>
+    </div>
+</body>
+</html>

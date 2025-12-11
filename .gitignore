@@ -45,14 +45,16 @@ config.py
 *.key
 *.pem
 
-# Output Files
-output/*.csv
-output/*.json
-output/*.txt
-!output/.gitkeep
+# Data Files (크롤링 결과물 - VM에 별도 관리)
+*.csv
+*.json
+!package.json
+!package-lock.json
+*.xlsx
 
 # Logs
 *.log
+logs/
 
 # Temporary Files
 *.tmp
@@ -61,3 +63,10 @@ output/*.txt
 
 # Archive
 archive/
+crawl_archive/
+
+# Crawl Results (VM에서 관리)
+crawl_results/
+
+# Cookies & Session
+*.pkl
