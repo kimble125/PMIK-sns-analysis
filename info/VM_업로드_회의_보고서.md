@@ -1,0 +1,184 @@
+# Crawler VM 업로드 회의 보고서
+
+**작성일**: 2025-12-11  
+**작성자**: Kimble  
+**GitHub**: https://github.com/kimble125/PMIK-sns-analysis
+
+---
+
+## 1. 프로젝트 현황 요약
+
+### 1.1 파일 통계
+
+| 파일 유형 | 개수 | 총 용량 |
+|----------|------|--------|
+| **Python (.py)** | 76개 | 3.1MB |
+| **CSV (.csv)** | 86개 | 76MB |
+| **JSON (.json)** | 14개 | 44MB |
+| **전체 프로젝트** | - | **약 136MB** (실제 코드/데이터) |
+
+> 참고: .git(108MB), .venv(1.3GB)는 VM 업로드 시 제외
+
+### 1.2 플랫폼별 폴더 용량
+
+| 폴더 | 용량 | 비고 |
+|------|------|------|
+| `1_band/` | 2.5MB | Band 크롤러 |
+| `2_naver_cafe/` | 3.2MB | 네이버 카페 크롤러 |
+| `3_naver_blog/` | 54MB | 네이버 블로그 크롤러 (데이터 포함) |
+| `4_youtube/` | 3.9MB | YouTube 크롤러 |
+| `5_kakaostory/` | 38MB | 카카오스토리 크롤러 |
+| `6_instagram/` | 6.2MB | 인스타그램 크롤러 |
+| `7_facebook/` | 932KB | 페이스북 크롤러 |
+| `crawl_archive/` | 372KB | 이전 버전 코드 백업 |
+| `analysis/` | 9.2MB | 분석 스크립트/결과 |
+| `multimedia-process/` | 17MB | 멀티미디어 처리 |
+| `info/` | 1.3MB | 문서/가이드 |
+
+---
+
+## 2. 폴더 구조 (정리 완료)
+
+```
+PMIK-sns-analysis/
+├── 1_band/                    # Band 크롤러
+│   ├── band_crawler.py        # 메인 크롤러
+│   ├── config_band.yaml       # 설정
+│   └── data_band/             # 수집 데이터
+├── 2_naver_cafe/              # 네이버 카페 크롤러
+│   ├── naver_cafe_pm_crawler.py
+│   ├── naver_cafe_posts_crawler.py
+│   ├── naver_cafe_targeting_crawler.py
+│   ├── config_cafe.yaml
+│   └── data_*/                # 수집 데이터
+├── 3_naver_blog/              # 네이버 블로그 크롤러
+│   ├── naver_blog_crawler.py
+│   ├── config.naver_blog.yaml
+│   └── data/                  # 수집 데이터
+├── 4_youtube/                 # YouTube 크롤러
+│   ├── youtube_crawler.py
+│   ├── config_youtube.yaml
+│   └── output/                # 수집 데이터
+├── 5_kakaostory/              # 카카오스토리 크롤러
+│   ├── kakaostory_crawling_test.py
+│   └── *.json                 # 수집 데이터
+├── 6_instagram/               # 인스타그램 크롤러
+│   ├── instagram_crawling_userposts.py
+│   └── *.json                 # 수집 데이터
+├── 7_facebook/                # 페이스북 크롤러
+│   ├── facebook_crawling.py
+│   └── *.json                 # 수집 데이터
+├── crawl_results/             # 크롤링 최종 결과물 (신규)
+├── crawl_archive/             # 이전 버전 코드 백업
+├── logs/                      # 로그 (플랫폼별 하위 폴더)
+│   ├── band/
+│   ├── naver_cafe/
+│   ├── naver_blog/
+│   ├── youtube/
+│   ├── kakaostory/
+│   ├── instagram/
+│   └── facebook/
+├── analysis/                  # 분석 스크립트
+├── multimedia-process/        # 멀티미디어 처리
+└── info/                      # 문서/가이드
+```
+
+---
+
+## 3. VM 업로드 방안 (제안)
+
+### 3.1 권장 방식: Git Clone/Pull
+
+```bash
+# VM에서 실행
+cd /home/pmi
+git clone https://github.com/kimble125/PMIK-sns-analysis.git
+# 또는 기존 repo가 있다면
+cd PMIK-sns-analysis && git pull
+```
+
+**장점**:
+- 버전 관리 유지
+- 깔끔한 상태로 배포
+- .gitignore로 불필요한 파일 자동 제외
+
+### 3.2 대안: SCP 직접 전송
+
+```bash
+# 로컬에서 실행 (데이터 파일 포함 시)
+scp -r /Users/kimble/Documents/IT/PMIK-sns-analysis crawler:/home/pmi/
+```
+
+**주의**: .git, .venv 폴더 제외 필요
+
+### 3.3 데이터 파일 처리
+
+| 항목 | Git | VM |
+|------|-----|-----|
+| **Python 코드 (.py)** | ✅ 추적 | ✅ 업로드 |
+| **설정 파일 (.yaml)** | ✅ 추적 | ✅ 업로드 |
+| **데이터 (.csv, .json)** | ❌ 제외 (.gitignore) | ✅ 별도 전송 |
+| **로그 (.log)** | ❌ 제외 | VM에서 생성 |
+
+---
+
+## 4. VM 환경 요구사항
+
+### 4.1 필수 패키지
+
+```bash
+# Python 패키지
+pip install selenium python-dotenv pyyaml requests beautifulsoup4
+
+# 시스템 패키지 (크롤링용)
+sudo apt install chromium-browser chromium-chromedriver
+
+# 멀티미디어 처리 (선택)
+sudo apt install ffmpeg
+pip install paddleocr faster-whisper
+```
+
+### 4.2 환경 변수 (.env)
+
+각 플랫폼 폴더에 `.env` 파일 필요:
+- `3_naver_blog/.env`: Naver API 키
+- `4_youtube/.env`: YouTube API 키
+- `6_instagram/.env`: IG_USERNAME, IG_PASSWORD
+- `7_facebook/.env`: FB_EMAIL, FB_PASSWORD
+
+---
+
+## 5. 인계 사항
+
+### 5.1 완료된 작업
+- [x] 폴더 구조 통일 및 정리
+- [x] 크롤러 파일명 통일 (`{platform}_crawler.py`)
+- [x] 이전 버전 코드 `crawl_archive/`로 이동
+- [x] `.gitignore` 업데이트 (데이터 파일 제외)
+- [x] Git 커밋 및 Push 완료
+- [x] Git Tag 백업: `legacy-backup-20251211`
+
+### 5.2 후속 작업 (인계자)
+- [ ] VM에서 `git pull` 실행
+- [ ] 각 플랫폼별 `.env` 파일 설정
+- [ ] 크롤링 자동화 스케줄링 (crontab)
+- [ ] 데이터 포맷 통일 검토 (CSV vs JSON)
+
+### 5.3 데이터 포맷 관련 인계사항
+
+**현재 상태**:
+- band, naver_cafe, naver_blog: **CSV**
+- kakaostory, instagram, facebook: **JSON**
+
+**권장 방향**:
+1. 크롤링 저장: JSON (원본 데이터 보존)
+2. 분석용 변환: CSV (pandas 분석 시)
+
+---
+
+## 6. 문의 사항
+
+VM 업로드 관련 추가 문의 사항이 있으시면 말씀해 주세요.
+
+- **Git 백업 Tag**: `git checkout legacy-backup-20251211` (정리 전 상태 복구 가능)
+- **GitHub URL**: https://github.com/kimble125/PMIK-sns-analysis
