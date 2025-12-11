@@ -61,8 +61,8 @@ logs/
 *.temp
 .cache/
 
-# Final Results (각 플랫폼 폴더 내)
-*/final/
+# Results (각 플랫폼 폴더 내 누적 결과물)
+*/results_*/
 
 # Cookies & Session
 *.pkl
