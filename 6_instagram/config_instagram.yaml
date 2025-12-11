@@ -1,0 +1,19 @@
+# Instagram Crawler Configuration
+
+# 인증 정보 (.env 파일에서 관리)
+# IG_USERNAME=your_username
+# IG_PASSWORD=your_password
+
+# 크롤링 설정
+crawling:
+  headless_mode: true
+  scroll_pause_time: 2
+  max_posts: null  # null = 무제한
+
+# 출력 설정
+output:
+  data_dir: "data"
+  user_json: "data/instagram_user.json"
+  media_json: "data/instagram_media.json"
+  log_file: "logs/instagram.log"
+  cookie_path: "instagram_cookies.pkl"

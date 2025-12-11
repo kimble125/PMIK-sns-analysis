@@ -61,10 +61,6 @@ logs/
 *.temp
 .cache/
 
-# Archive
-archive/
-crawl_archive/
-
 # Crawl Results (VM에서 관리)
 crawl_results/
 

@@ -1,0 +1,40 @@
+# KakaoStory Crawler Configuration
+
+# 해시태그 목록
+hashtags:
+  - "#독일피엠"
+  - "#피엠주스"
+  - "#액티바이즈"
+  - "#리스토레이트"
+  - "#피트라인"
+  - "#파워칵테일"
+  - "#탑쉐이프"
+  - "#부산피엠"
+  - "#여주피엠"
+  - "#광주피엠"
+  - "#성남피엠"
+  - "#천안피엠"
+  - "#파주피엠"
+  - "#대구피엠"
+  - "#경주피엠"
+  - "#김해피엠"
+  - "#수원피엠"
+  - "#인천피엠"
+  - "#남양주피엠"
+  - "#강서피엠"
+  - "#의정부피엠"
+  - "#서울피엠"
+  - "#피엠사업"
+  - "#피트라인앰버서더"
+  - "#피엠다이어트"
+
+# 크롤링 설정
+crawling:
+  max_posts_per_tag: null  # null = 무제한
+  headless_mode: true
+  refresh_window_days: 3
+
+# 출력 설정
+output:
+  data_dir: "data"
+  log_file: "logs/kakaostory.log"

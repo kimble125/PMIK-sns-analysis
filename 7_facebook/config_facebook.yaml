@@ -1,0 +1,23 @@
+# Facebook Crawler Configuration
+
+# 인증 정보 (.env 파일에서 관리)
+# FB_EMAIL=your_email
+# FB_PASSWORD=your_password
+
+# 해시태그 목록
+hashtags:
+  - "#독일피엠"
+  # 추가 해시태그는 여기에 추가
+
+# 크롤링 설정
+crawling:
+  test_mode: true  # true = 첫 번째 해시태그의 상위 40개만
+  headless_mode: false
+  scroll_pause_time: 2
+
+# 출력 설정
+output:
+  data_dir: "data"
+  media_json: "data/facebook_media.json"
+  log_file: "logs/facebook.log"
+  cookie_path: "facebook_cookies.pkl"
